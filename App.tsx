@@ -1,14 +1,27 @@
 import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { SafeAreaView, SafeAreaViewBase, StyleSheet, Text, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { SafeAreaView, SafeAreaViewBase, StyleSheet, Text, TextInput, View } from 'react-native';
+import { AddButton } from './components/button';
+import { List } from './components/list';
+import { dataList } from './types/data';
 
 export default function App() {
+  const [title, setTitle] = useState('ToDoList');
+  const [list, setList] = useState(dataList)
+    
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.navBar}>
-        <Text>Hello, world!</Text>
+      <View>
+        <TextInput style={styles.title} onChangeText={setTitle} >
+          {title}
+        </TextInput>
       </View>
-      <View></View>
+      <View style={styles.addButton}>
+        <AddButton setList={setList} />
+      </View>
+      <View style={styles.listContainer}>
+        <List setList={setList} items={list.sort((a, b) => +a.isDone - +b.isDone)} />
+      </View>
       <StatusBar style="auto" />
     </SafeAreaView>
   );
@@ -17,13 +30,27 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#433F40',
     flexDirection: "column",
   },
-  navBar: {
-    justifyContent: "space-around",
-    flexDirection: "row",
-    backgroundColor: '#030303',
-    height: 60,
+  title: {
+    fontSize: 30,
+    textAlign: 'center',
+    color: '#fff',
+
+    marginLeft: 50,
+    marginRight: 50,
+    marginTop: 40,
+    paddingTop: 10,
+    paddingBottom: 10,
+    
+    backgroundColor: "#6fc2d1",
+    borderRadius: 50,
+  },
+  addButton: {
+    marginBottom: 20,
+    marginTop: 20,
+  },
+  listContainer: {
   }
 });
