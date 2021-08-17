@@ -1,32 +1,30 @@
 import React, { useRef, useState } from 'react'
-import { TouchableOpacity, StyleSheet, View, TextInput, TextInputComponent } from 'react-native'
+import { TouchableOpacity, StyleSheet, View, TextInput, TextInputComponent, Alert } from 'react-native'
 import { AddIcon } from '../../assets/AddIcon'
+import { addItem } from '../../store/actions/listActions'
 import { ListItem } from '../../types/interfaces'
+import { getRandomId } from '../../utils/getRandomId'
 
-interface IProps {
-    setList: React.Dispatch<React.SetStateAction<ListItem[]>>,
-}
 
-export const AddButton = ({ setList }: IProps) => {
+export const AddButton = () => {
     const [text, setText] = useState('')
 
-    const addTask = () => {
-        setList(prev => {
-            prev.push({
-                text: text,
-                id: prev.length.toString(),
-                isDone: false,
-            })
-            setText('')
-            return prev
-        })
+    const addItemHandler = (item: ListItem) => {
+        // dispatch(addItem(item))
     }
 
     return (
         <View style={styles.button}>
             <TextInput defaultValue={text} onChangeText={text => setText(text)} style={styles.input} />
             <View style={styles.iconWrapper}>
-                <TouchableOpacity onPress={addTask}>
+                <TouchableOpacity onPress={() => {
+                    const item: ListItem = {
+                        text,
+                        isDone: false,
+                        id: getRandomId(),
+                    }
+                    addItemHandler(item)
+                }}>
                     <AddIcon />
                 </TouchableOpacity>
             </View>

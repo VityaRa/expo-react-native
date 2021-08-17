@@ -6,17 +6,15 @@ import { StyleSheet } from 'react-native';
 
 interface IListProps {
     items: ListItem[],
-    setList: React.Dispatch<React.SetStateAction<ListItem[]>>,
 }
-
 
 interface IProps {
     item: ListItem,
 }
 
-export const List = ({ items, setList }: IListProps) => {
+export const List = ({ items }: IListProps) => {
     const renderItem = ({ item }: IProps) => (
-        <Item setList={setList} item={item} />
+        <Item item={item} />
     );
     return (
         <FlatList style={styles.container} data={items} renderItem={renderItem} />

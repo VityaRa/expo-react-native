@@ -6,31 +6,22 @@ import { DoneIcon } from "../../assets/DoneIcon";
 
 interface IProps {
     item: ListItem,
-    setList: React.Dispatch<React.SetStateAction<ListItem[]>>,
 }
 
-export const Item = ({ item, setList }: IProps) => {
-    const completeTask = () => {
-        setList(prev => {
-            return prev.map(_item => {
-                if (_item.id === item.id)
-                    _item.isDone = !_item.isDone
-                return _item;
-            })
-        })
-    }
+export const Item = ({ item }: IProps) => {
 
     return (
         <View style={[styles.container, item.isDone ? styles.completeContainer : {}]} key={item.id}>
             <View>
                 <TouchableOpacity
                     style={[styles.icon, item.isDone ? styles.doneIcon : {}]}
-                    onPress={completeTask}>
+                    onPress={() => {
+                        //toggle action
+                    }}>
                     <View style={styles.iconWrapper}>
-                        <DoneIcon color={item.isDone ? "#000" : "#fff"}/>
+                        <DoneIcon color={item.isDone ? "#000" : "#fff"} />
                     </View>
                 </TouchableOpacity>
-
             </View>
             <View style={styles.textWrapper}>
                 <Text style={styles.text}>{item.text}</Text>
