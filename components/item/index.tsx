@@ -3,20 +3,23 @@ import { ListItem } from "../../types/interfaces"
 import React from 'react';
 import { StyleSheet } from 'react-native';
 import { DoneIcon } from "../../assets/DoneIcon";
+import { useDispatch } from "react-redux";
+import { removeItem, toggleItem } from "../../store/actions/listActions";
+import { AddIcon } from "../../assets/AddIcon";
 
 interface IProps {
     item: ListItem,
 }
 
 export const Item = ({ item }: IProps) => {
-
+    const dispatch = useDispatch();
     return (
         <View style={[styles.container, item.isDone ? styles.completeContainer : {}]} key={item.id}>
             <View>
                 <TouchableOpacity
                     style={[styles.icon, item.isDone ? styles.doneIcon : {}]}
                     onPress={() => {
-                        //toggle action
+                        dispatch(toggleItem(item.id))
                     }}>
                     <View style={styles.iconWrapper}>
                         <DoneIcon color={item.isDone ? "#000" : "#fff"} />
@@ -26,6 +29,17 @@ export const Item = ({ item }: IProps) => {
             <View style={styles.textWrapper}>
                 <Text style={styles.text}>{item.text}</Text>
             </View>
+            <View>
+                <TouchableOpacity
+                    style={styles.delete}
+                    onPress={() => {
+                        dispatch(removeItem(item.id))
+                    }}>
+                    <View>
+                        <AddIcon />
+                    </View>
+                </TouchableOpacity>
+            </View>
         </View>
     )
 }
@@ -34,7 +48,7 @@ export const Item = ({ item }: IProps) => {
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        justifyContent: 'flex-start',
+        justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#B2ADAA',
         marginLeft: 25,
@@ -48,6 +62,7 @@ const styles = StyleSheet.create({
     },
     textWrapper: {
         marginLeft: 10,
+        flex: 1,
     },
     text: {
         color: '#ffffff',
@@ -62,6 +77,19 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: '#483D41',
         alignItems: 'center',
+    },
+    delete: {
+        marginRight: 10,
+        backgroundColor: '#7F3F41',
+        width: 50,
+        height: 50,
+        borderRadius: 50,
+        marginLeft: 10,
+        justifyContent: 'center',
+        alignItems: 'center',
+        transform: [
+            { rotate: "45deg" }
+        ]
     },
     doneIcon: {
         backgroundColor: '#586261',

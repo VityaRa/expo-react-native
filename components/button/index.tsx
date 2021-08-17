@@ -1,6 +1,8 @@
 import React, { useRef, useState } from 'react'
 import { TouchableOpacity, StyleSheet, View, TextInput, TextInputComponent, Alert } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
 import { AddIcon } from '../../assets/AddIcon'
+import { RootState } from '../../store'
 import { addItem } from '../../store/actions/listActions'
 import { ListItem } from '../../types/interfaces'
 import { getRandomId } from '../../utils/getRandomId'
@@ -8,9 +10,10 @@ import { getRandomId } from '../../utils/getRandomId'
 
 export const AddButton = () => {
     const [text, setText] = useState('')
+    const dispatch = useDispatch();
 
     const addItemHandler = (item: ListItem) => {
-        // dispatch(addItem(item))
+        dispatch(addItem(item))
     }
 
     return (

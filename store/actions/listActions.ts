@@ -10,3 +10,17 @@ export const addItem = (newItem: ListItem) => (
         newItem,
     }
 );
+
+export const toggleItem = (id: string) => (
+    {
+        type: TOGGLE_ITEM,
+        id,
+    }
+);
+
+export const removeItem = (id: string) => (
+    {
+        type: REMOVE_ITEM,
+        id,
+    }
+);
