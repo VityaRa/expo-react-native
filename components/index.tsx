@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState } from 'react';
-import { SafeAreaView, StyleSheet, TextInput, View } from 'react-native';
+import { SafeAreaView, StyleSheet, TextInput, View, Keyboard } from 'react-native';
 import { Provider, useSelector } from 'react-redux';
 
 import Symbol_observable from 'symbol-observable';
@@ -9,14 +9,15 @@ import { AddButton } from './button';
 import { List } from './list';
 
 export default function Index() {
-    const [title, setTitle] = useState('ToDoList');
+    const [title, setTitle] = useState('List');
     const { list } = useSelector((state: RootState) => state.list)
-    
+
     return (
         <SafeAreaView style={styles.container}>
             <View>
-                <TextInput value={title} style={styles.title} onChangeText={setTitle} >
-                </TextInput>
+                <TextInput onSubmitEditing={() => {
+                    Keyboard.dismiss();
+                }} value={title} style={styles.title} onChangeText={setTitle} />
             </View>
             <View style={styles.addButton}>
                 <AddButton />

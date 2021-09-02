@@ -1,8 +1,7 @@
 import React, { useRef, useState } from 'react'
-import { TouchableOpacity, StyleSheet, View, TextInput, TextInputComponent, Alert } from 'react-native'
-import { useDispatch, useSelector } from 'react-redux'
+import { TouchableOpacity, StyleSheet, View, TextInput, TextInputComponent, Alert, Keyboard } from 'react-native'
+import { useDispatch } from 'react-redux'
 import { AddIcon } from '../../assets/AddIcon'
-import { RootState } from '../../store'
 import { addItem } from '../../store/actions/listActions'
 import { ListItem } from '../../types/interfaces'
 import { getRandomId } from '../../utils/getRandomId'
@@ -14,11 +13,19 @@ export const AddButton = () => {
 
     const addItemHandler = (item: ListItem) => {
         dispatch(addItem(item))
+        setText('')
     }
 
     return (
         <View style={styles.button}>
-            <TextInput defaultValue={text} onChangeText={text => setText(text)} style={styles.input} />
+            <TextInput
+                onSubmitEditing={() => {
+                    Keyboard.dismiss();
+                }}
+                defaultValue={text}
+                onChangeText={text => setText(text)}
+                style={styles.input}
+            />
             <View style={styles.iconWrapper}>
                 <TouchableOpacity onPress={() => {
                     const item: ListItem = {

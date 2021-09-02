@@ -20,7 +20,9 @@ export const Item = ({ item }: IProps) => {
                     style={[styles.icon, item.isDone ? styles.doneIcon : {}]}
                     onPress={() => {
                         dispatch(toggleItem(item.id))
-                    }}>
+                    }}
+                    onBlur={() => console.log('ey')}
+                    >
                     <View style={styles.iconWrapper}>
                         <DoneIcon color={item.isDone ? "#000" : "#fff"} />
                     </View>
